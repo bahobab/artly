@@ -12,7 +12,7 @@
 #   kubectl:
 #     manifests:
 #     - infra/k8s/auth-depl.yaml
-apiVersion: skaffold/v2beta16
+apiVersion: skaffold/v2alpha3
 kind: Config
 deploy:
   kubectl:
@@ -20,7 +20,7 @@ deploy:
     - ./infra/k8s
 build:
   local:
-    push: true
+    push: false
   artifacts:
     - image: khooph/auth
       context: auth

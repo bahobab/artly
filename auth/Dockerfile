@@ -2,7 +2,17 @@ FROM node:alpine
 
 WORKDIR /app
 COPY package.json .
-RUN yarn
+RUN npm install
 COPY . .
 
-CMD ["yarn", "start"]
+CMD ["npm", "start"]
+
+
+# FROM node:alpine
+
+# WORKDIR /app
+# COPY package.json .
+# RUN yarn
+# COPY . .
+
+# CMD ["yarn", "start"]
