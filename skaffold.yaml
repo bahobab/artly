@@ -1,26 +1,12 @@
-# apiVersion: skaffold/v2beta16
-# kind: Config
-# metadata:
-#   name: artly
-# build:
-#   artifacts:
-#   - image: khooph/auth
-#     context: auth
-#     docker:
-#       dockerfile: Dockerfile
-# deploy:
-#   kubectl:
-#     manifests:
-#     - infra/k8s/auth-depl.yaml
 apiVersion: skaffold/v2alpha3
 kind: Config
 deploy:
   kubectl:
     manifests:
-    - ./infra/k8s
+      - ./infra/k8s/*
 build:
   local:
-    push: false
+    push: true
   artifacts:
     - image: khooph/auth
       context: auth
