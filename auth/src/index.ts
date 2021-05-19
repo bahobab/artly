@@ -38,7 +38,7 @@ const startServer = async () => {
   }
   
   app.listen(3000, () => {
-    console.log('AUTH: Server listening on port 3000!!!');
+    console.log('AUTH: Server listening on port 3000!!');
   });
 };
 
