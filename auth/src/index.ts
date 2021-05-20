@@ -1,4 +1,5 @@
 import express from 'express';
+import cookieSession from 'cookie-session';
 import 'express-async-errors';
 import mongoose from 'mongoose';
 
@@ -11,7 +12,13 @@ import { NotFoundError } from './errors/not-found-error';
 
 const app = express();
 
+app.set('trust proxy', true); // because of ingress-nginx
+
 app.use(express.json());
+app.use(cookieSession({
+  signed: false,
+  secure: true
+}));
 
 app.use(currentUserRouter);
 app.use(signupRouter);
@@ -26,6 +33,10 @@ app.all('*', async (req, res) => {
 app.use(errorHandler);
 
 const startServer = async () => {
+  if (!process.env.JWT_KEY) {
+    throw new Error('JWT_KEY must be defined');
+  }
+
   try {
     await mongoose.connect('mongodb://auth-mongo-srv:27017/auth', {
       useNewUrlParser: true,
