@@ -3,7 +3,7 @@ import { body} from 'express-validator';
 import jwt from 'jsonwebtoken';
 
 import { User } from '../models/user';
-import { ValidateRequest } from '../middleware/validate-requests';
+import { ValidateRequest} from '../middleware/validate-requests';
 import { BadRequestError } from '../errors/bad-request-error';
 
 const router = express.Router();
@@ -17,14 +17,15 @@ router.post('/api/users/signup',
       .withMessage('Password length must be between 4 and 20 characters')
   ],
   ValidateRequest,
-  async (req: Request, res: Response) => {  
+  async (req: Request, res: Response) => {
 
     const { email, password } = req.body;
-
+    
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       throw new BadRequestError('Email already in use');
     }
+    
 
     const user = User.buildUser({ email, password });
     await user.save();
@@ -40,8 +41,7 @@ router.post('/api/users/signup',
     req.session = {
       jwt: userJwt,
     }
-
-    res.status(201).send(user);
+    return res.status(201).send(user);
 });
 
 export { router as signupRouter };
