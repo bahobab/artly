@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: klient-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: klient
+  template:
+    metadata:
+      labels:
+        app: klient
+    spec:
+      containers:
+        - name: klient
+          image: khooph/klient
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: klient-srv
+spec:
+  selector:
+    app: klient
+  ports:
+    - name: klient
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
