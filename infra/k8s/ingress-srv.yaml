@@ -1,4 +1,32 @@
-apiVersion: networking.k8s.io/v1
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: ingress-service
+#   annotations:
+#     kubernetes.io/ingress.class: nginx
+#     nginx.ingress.kubernetes.io/use-regex: 'true'
+#     # nginx.ingress.kubernetes.io/secure-backends: "true"
+#     # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" 
+# spec:
+#   rules:
+#     - host: artly.dev
+#       http:
+#         paths:
+#           - path: /api/users/?(.*)
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: auth-srv
+#                 port:
+#                   number: 3000
+#           - path: /?(.*)
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: klient-srv
+#                 port:
+#                   number: 3000
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: ingress-service
@@ -11,16 +39,10 @@ spec:
       http:
         paths:
           - path: /api/users/?(.*)
-            pathType: Prefix
             backend:
-              service:
-                name: auth-srv
-                port:
-                  number: 3000
+              serviceName: auth-srv
+              servicePort: 3000
           - path: /?(.*)
-            pathType: Prefix
             backend:
-              service:
-                name: klient-srv
-                port:
-                  number: 3000
+              serviceName: klient-srv
+              servicePort: 3000

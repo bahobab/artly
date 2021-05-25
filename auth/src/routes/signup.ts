@@ -41,6 +41,7 @@ router.post('/api/users/signup',
     req.session = {
       jwt: userJwt,
     }
+
     return res.status(201).send(user);
 });
 
